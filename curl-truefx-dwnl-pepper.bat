@@ -35,7 +35,7 @@ for %%y in (2017,2016,2015,2014,2013,2012,2011,2010,2009) do (
       if not exist "%DESTINATION%\!FNAME!" (
         call :mkurl URL %%y %%m %%p !FNAME!
         echo !URL!
-        %CURL% %RANGE% --insecure --progress-bar --fail --output "%DESTINATION%\!FNAME!" !URL!
+        %CURL% %RANGE% --progress-bar --fail --output "%DESTINATION%\!FNAME!" !URL!
       ) else (
         echo !FNAME! exists at destination, skipping
       )
@@ -51,17 +51,18 @@ exit /b
 :mkurl
 :: Expects: result, year, month, pair, filename
 :: There was a change in URL format in April 2017
-::   https://www.truefx.com/dev/data//2017/MARCH-2017/USDJPY-2017-03.zip
-::   https://www.truefx.com/dev/data//2017/2017-04/USDJPY-2017-04.zip
-::   (link structure borrowed from https://pepperstone.com/en/client-resources/historical-tick-data)
+::   http://www.truefx.com/dev/data//2017/MARCH-2017/USDJPY-2017-03.zip
+::   http://www.truefx.com/dev/data//2017/2017-04/USDJPY-2017-04.zip
+::   (link structure borrowed from https://pepperstone.com/en/client-resources/historical-tick-data
+::    but https is replaced with http)
 if %2 leq 2016 goto :chrmonth
 if %2 geq 2018 goto :nummonth
 if %3 leq 03 goto :chrmonth
 :nummonth
-set %1="https://www.truefx.com/dev/data//%2/%2-%3/%5"
+set %1="http://www.truefx.com/dev/data//%2/%2-%3/%5"
 goto :endmkurl
 :chrmonth
-set %1="https://www.truefx.com/dev/data//%2/!MONTHS[%3]!-%2/%5"
+set %1="http://www.truefx.com/dev/data//%2/!MONTHS[%3]!-%2/%5"
 :endmkurl
 exit /b
 
