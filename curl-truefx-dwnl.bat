@@ -62,7 +62,9 @@ for %%y in (2017,2016,2015,2014,2013,2012,2011,2010,2009) do (
 
 copy %COOKIEJAR% %COOKIEJARBAK%
 %CURL% "http://truefx.com/?page=logout" --progress-bar --cookie "%COOKIEJAR%" --cookie-jar "%COOKIEJAR%" > "%LOGOUTLOG%"
+
 goto :eof
+:: functions below
 
 :mkfname
 :: Expects: result, year, month, pair
